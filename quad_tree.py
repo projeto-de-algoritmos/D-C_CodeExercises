@@ -73,10 +73,8 @@ class Solution:
                 el_sum += self.grid[i][j]
 
         if el_sum == max_sum:
-            print("all 1")  # @TODO: remover
             return Node(val=True, isLeaf=isLeaf, topLeft=None, bottomLeft=None, topRight=None, bottomRight=None)
         if el_sum == 0:
-            print("all 0")  # @TODO: remover
             return Node(val=False, isLeaf=isLeaf, topLeft=None, bottomLeft=None, topRight=None, bottomRight=None)
 
         # Se não ocorre nenhum dos casos-base, dividir e conquistar.
@@ -85,22 +83,15 @@ class Solution:
         bot_lef = self.get(x1, y0)
         bot_rig = self.get(x1, y1)
 
-        print(f'x = ({x0}, {x1}) and y = ({y0}, {y1})')  # @TODO: remover
-        print(f'top_left={top_lef} top_right={top_rig} bottom_left={bot_lef} bottom_right={bot_rig}')  # @TODO: remover
-
+        if top_rig == 0:
+            value = False
         x_mid = math.floor((x0 + x1) / 2)
         y_mid = math.floor((y0 + y1) / 2)
 
-        print('TOP LEFT')
-        self.print_subgrid(x0, y0, x_mid, y_mid)
+        top_lef = self.get_node_from_quad(x0, y0, x_mid, y_mid)
+        top_rig = self.get_node_from_quad(x0, y_mid + 1, x_mid, y1)
+        bot_lef = self.get_node_from_quad(x_mid + 1, y0, x1, y_mid)
+        bot_rig = self.get_node_from_quad(x_mid + 1, y_mid + 1, x1, y1)
 
-        print('TOP RIGHT')
-        self.print_subgrid(x0, y_mid + 1, x_mid, y1)
-
-        print('BOT LEFT')
-        self.print_subgrid(x_mid + 1, y0, x1, y_mid)
-
-        print('BOT RIGHT')
-        self.print_subgrid(x_mid + 1, y_mid + 1, x1, y1)
-
-        return Node(value, isLeaf, top_lef, top_rig, bot_lef, bot_rig)
+        node = Node(value, False, top_lef, top_rig, bot_lef, bot_rig)
+        return node

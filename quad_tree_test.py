@@ -32,21 +32,8 @@ class TestSolution:
         assert self.sol.construct(grid).__eq__(self.leaf_grid_1)
 
     def test_grid_generating_one_node(self):
-        grid: List[List[int]] = [[1, 2],
-                                 [3, 4]]
-        out_tree: Node = Node(val=True,
-                              isLeaf=False,
-                              topLeft=self.leaf_grid_0,
-                              topRight=self.leaf_grid_1,
-                              bottomLeft=self.leaf_grid_1,
-                              bottomRight=self.leaf_grid_0)
-        assert self.sol.construct(grid).__eq__(out_tree)
-
-    def test_print_grid(self):
-        grid: List[List[int]] = [[1, 2, 3, 4],
-                                 [5, 6, 7, 8],
-                                 [9, 10, 11, 12],
-                                 [13, 14, 15, 16]]
+        grid: List[List[int]] = [[0, 1],
+                                 [1, 0]]
         out_tree: Node = Node(val=True,
                               isLeaf=False,
                               topLeft=self.leaf_grid_0,
