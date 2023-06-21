@@ -69,3 +69,11 @@ Para testar as soluções basta submetê-las aos juízes virtuais, disponíveis 
 Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
 
 Para auxiliar no desenvolvimento, alguns testes unitários foram criados, para rodar os testes é necessário ter o `pytest` instalado e então rodar `pytest quad_tree_test.py`.
+
+
+## Apresentação
+
+<video src='./assets/gravacao.mp4'></video>
+
+[Arquivo de apresentação](./assets/gravacao.mp4)
+
