@@ -1,13 +1,6 @@
-import sys
 from typing import List
 
-import pytest
-
 from quad_tree import Solution, Node
-
-grid8: List[List[int]] = [[1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1],
-                          [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0],
-                          [1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]]
 
 
 class TestSolution:
@@ -41,3 +34,21 @@ class TestSolution:
                               bottomLeft=self.leaf_grid_1,
                               bottomRight=self.leaf_grid_0)
         assert self.sol.construct(grid).__eq__(out_tree)
+
+    def test_grid_4by4(self):
+        grid: List[List[int]] = [[0, 0, 0, 0],
+                                 [0, 0, 0, 0],
+                                 [1, 1, 1, 1],
+                                 [1, 1, 1, 1]]
+
+        # Filhos do nível 1.
+        tl_1 = self.leaf_grid_0
+        tr_1 = self.leaf_grid_0
+        bl_1 = self.leaf_grid_1
+        br_1 = self.leaf_grid_1
+
+        # Raiz
+        out_tree = Node(False, False, tl_1, tr_1, bl_1, br_1)
+        result = self.sol.construct(grid)
+        assert result.__str__() == out_tree.__str__()
+        assert result.__eq__(out_tree)

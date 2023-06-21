@@ -14,12 +14,19 @@ class Node:
         self.bottomRight = bottomRight
 
     def __str__(self):
-        return '{' f'val =     {self.val}, ' \
-               f'isLeaf =      {self.isLeaf}, ' \
-               f'topLeft =     {self.topLeft}, ' \
-               f'topRight =    {self.topRight}, ' \
-               f'bottomLeft =  {self.bottomLeft}, ' \
-               f'bottomRight = {self.bottomRight}' '}'
+        # return '\n{' f'val = {self.val},' \
+        #        f'isLeaf = {self.isLeaf},' \
+        #        f'topLeft = {self.topLeft},' \
+        #        f'topRight = {self.topRight},' \
+        #        f'bottomLeft = {self.bottomLeft},' \
+        #        f'bottomRight = {self.bottomRight}' '}'
+
+        return '\t{' f'{self.val},' \
+               f'{self.isLeaf},' \
+               f'{self.topLeft},' \
+               f'{self.topRight},' \
+               f'{self.bottomLeft},' \
+               f'{self.bottomRight}' '}'
 
     def __eq__(self, other):
         return self.val == other.val and \
@@ -67,6 +74,7 @@ class Solution:
         # Caso Base 2: Grid com todos os elementos iguais
         el_sum = 0
         max_sum = 0
+
         for i in range(x0, x1 + 1):
             for j in range(y0, y1 + 1):
                 max_sum += 1
@@ -78,10 +86,7 @@ class Solution:
             return Node(val=False, isLeaf=isLeaf, topLeft=None, bottomLeft=None, topRight=None, bottomRight=None)
 
         # Se não ocorre nenhum dos casos-base, dividir e conquistar.
-        top_lef = self.get(x0, y0)
         top_rig = self.get(x0, y1)
-        bot_lef = self.get(x1, y0)
-        bot_rig = self.get(x1, y1)
 
         if top_rig == 0:
             value = False
