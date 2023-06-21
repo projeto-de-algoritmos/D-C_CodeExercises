@@ -37,14 +37,19 @@ class Solution:
     def construct(self, grid: List[List[int]]) -> Node:
         self.grid = grid
         self.n = len(grid) - 1
-        return self.get_node_from_quad(0, self.n, 0, self.n)
+        return self.get_node_from_quad(0, 0, self.n, self.n)
 
     def get(self, x, y):
         return self.grid[x][y]
 
+    def print_subgrid(self, x0, y0, x1, y1):
+        for row in self.grid[x0:x1 + 1]:
+            print(row[y0:y1 + 1])
+
     # Se todos os valores do grid na seção são iguais, gera um nó do tipo folha. Se não, gera os quatro filhos,
+
     # recursivamente.
-    def get_node_from_quad(self, x0: int, x1: int, y0: int, y1: int) -> Node:
+    def get_node_from_quad(self, x0: int, y0: int, x1: int, y1: int) -> Node:
         # É uma folha se todos os valores da região forem iguais.
         isLeaf: bool = True
         # Valor do node é True se a grid for de 1's e False se for de 0's.
@@ -65,7 +70,6 @@ class Solution:
         for i in range(x0, x1 + 1):
             for j in range(y0, y1 + 1):
                 max_sum += 1
-                print(i, j, self.get(i, j))
                 el_sum += self.grid[i][j]
 
         if el_sum == max_sum:
@@ -86,9 +90,17 @@ class Solution:
 
         x_mid = math.floor((x0 + x1) / 2)
         y_mid = math.floor((y0 + y1) / 2)
-        # top_lef = self.get_node_from_quad(x_mid, right, bottom, top)  # @TODO: verificar isso aqui
-        # top_rig = self.get_node_from_quad(left, x_mid, bottom, top)  # @TODO: verificar isso aqui
-        # bot_lef = self.get_node_from_quad(left, x_mid, bottom, bottom)  # @TODO: verificar isso aqui
-        # bot_rig = self.get_node_from_quad(left, x_mid, bottom, bottom)  # @TODO: verificar isso aqui
+
+        print('TOP LEFT')
+        self.print_subgrid(x0, y0, x_mid, y_mid)
+
+        print('TOP RIGHT')
+        self.print_subgrid(x0, y_mid + 1, x_mid, y1)
+
+        print('BOT LEFT')
+        self.print_subgrid(x_mid + 1, y0, x1, y_mid)
+
+        print('BOT RIGHT')
+        self.print_subgrid(x_mid + 1, y_mid + 1, x1, y1)
 
         return Node(value, isLeaf, top_lef, top_rig, bot_lef, bot_rig)
