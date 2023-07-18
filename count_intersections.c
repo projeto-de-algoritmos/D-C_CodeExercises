@@ -1,27 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
- 
+
+//Struct para representar o retorno das funções
 typedef struct retorno{
-    int *nums;
-    int  amount;
+    long long *nums;
+    long long  amount;
     long long inversions;
 }  retorno;
  
-retorno mergeAndCount(int vetorInicial[], int *numsA, int nA, int *numsB, int nB){
+retorno mergeAndCount(long long referencia[], long long *numsA, long long nA, long long *numsB, long long nB){
  
-    int inversionsMergeAndCount = 0;
-    int auxiliar[nA + nB];
-    int marcadorA = nA;
-    int marcadorB = 0;
-    
-    //Preencho o vetor de referencia
-    int referencia[nA+nB];
+    long long inversionsMergeAndCount = 0;
+    long long auxiliar[nA + nB];
+    long long marcadorA = nA;
+    long long marcadorB = 0;
 
-    for(int i = 0; i <  nA+nB; i++){
-        referencia[ vetorInicial[i] - 1 ] = i; 
-    }
-
-    int i = 0;
+    long long i = 0;
     while(i < nA + nB){
         
         if(marcadorA == 0){
@@ -54,10 +48,10 @@ retorno mergeAndCount(int vetorInicial[], int *numsA, int nA, int *numsB, int nB
         i++;
     }
     
-    for(int i = 0; i < nA; i++){
+    for(long long i = 0; i < nA; i++){
         numsA[i] = auxiliar[i];
     }
-    for(int i = 0; i < nB; i++){
+    for(long long i = 0; i < nB; i++){
         numsB[i] = auxiliar[i+nA];
     }
  
@@ -69,7 +63,7 @@ retorno mergeAndCount(int vetorInicial[], int *numsA, int nA, int *numsB, int nB
     return retornoMergeAndCount;
 }
  
-retorno sortAndCount(int vetorInicial[], int nums[], int n, int inv){
+retorno sortAndCount(long long referencia[], long long nums[], long long n, long long inv){
     
     retorno retornoSortAndCount;
     
@@ -82,13 +76,13 @@ retorno sortAndCount(int vetorInicial[], int nums[], int n, int inv){
     }
  
     //Divido o vetor ao meio dessa forma, para caso seja ímpar
-    int lengthA, lengthB;
+    long long lengthA, lengthB;
     lengthA = n/2;
     lengthB = n - n/2;
     
-    retorno retornoA = sortAndCount( vetorInicial, retornoSortAndCount.nums, lengthA, 0);
-    retorno retornoB = sortAndCount( vetorInicial, &retornoSortAndCount.nums[lengthA], lengthB, 0);
-    retorno retornoMergeAndCount = mergeAndCount(vetorInicial, retornoSortAndCount.nums,lengthA, &retornoSortAndCount.nums[lengthA],lengthB);  
+    retorno retornoA = sortAndCount( referencia, retornoSortAndCount.nums, lengthA, 0);
+    retorno retornoB = sortAndCount( referencia, &retornoSortAndCount.nums[lengthA], lengthB, 0);
+    retorno retornoMergeAndCount = mergeAndCount(referencia, retornoSortAndCount.nums,lengthA, &retornoSortAndCount.nums[lengthA],lengthB);
  
     retornoSortAndCount.inversions = retornoA.inversions + retornoB.inversions+ retornoMergeAndCount.inversions;
     retornoSortAndCount.nums = retornoMergeAndCount.nums;
@@ -98,27 +92,33 @@ retorno sortAndCount(int vetorInicial[], int nums[], int n, int inv){
  
 int main(void){
  
-    int T;
-    scanf("%d", &T);
+    long long T;
+    scanf("%lld", &T);
  
-    int n;
-    for(int i = 0; i < T; i++){
+    long long n;
+    for(long long i = 0; i < T; i++){
         
-        scanf("%d", &n);
-        int permutationA[n];
-        int permutationB[n]; 
+        scanf("%lld", &n);
+        long long permutationA[n];
+        long long permutationB[n]; 
  
-        for(int j = 0; j < n; j++){
-            scanf("%d", &permutationA[j]);
+        for(long long j = 0; j < n; j++){
+            scanf("%lld", &permutationA[j]);
         }
  
-        for(int j = 0; j < n; j++){
-            scanf("%d", &permutationB[j]);
+        for(long long j = 0; j < n; j++){
+            scanf("%lld", &permutationB[j]);
         }
- 
-        int intersections = sortAndCount(permutationA, permutationB, n, 0).inversions;
 
-        printf("%d\n", intersections);
+        //Preencho o vetor de referencia
+        long long referencia[n];
+        for(long long j = 0; j < n; j++){
+            referencia[ permutationA[j] - 1 ] = j;  
+        }
+
+        long long intersections = sortAndCount(referencia, permutationB, n, 0).inversions;
+
+        printf("%lld\n", intersections);
  
     }
     
